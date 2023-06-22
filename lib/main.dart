@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:to_do_app/to_do_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,27 +14,9 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "To Do App",
-      home: HomeScreen(),
+      theme: ThemeData(primarySwatch: Colors.green),
+      home: const ToDopage(),
     );
   }
 
-}
-
-class HomeScreen extends StatefulWidget{
-  @override
-  State<StatefulWidget> createState() {
-    return HomeScreenUI();
-  }
-
-}
-
-class HomeScreenUI extends State<HomeScreen>{
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("To Do App"),
-      ),
-    );
-  }
 }
