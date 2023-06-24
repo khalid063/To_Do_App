@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:to_do_app/style.dart';
 
 class ToDopage extends StatefulWidget {
   const ToDopage({Key? key}) : super(key: key);
@@ -10,9 +11,34 @@ class ToDopage extends StatefulWidget {
 
 class _ToDopageState extends State<ToDopage> {
 
-  List ToDoList = [
-    {"1":"1"},
-  ];
+  // List toDoList = [
+  //   {"1":"1"},
+  //   {"1":"1"},
+  //   {"1":"1"},
+  // ];
+
+  List toDoList = [];
+  String item = "";
+
+  myInputOnChange(value){
+    setState(() {
+      item = value;
+      //print(item);
+    });
+  }
+
+  AddItemIntoList(){
+    setState(() {
+      toDoList.add({"item":item});
+      print(toDoList[0]);
+    });
+  }
+
+  RemoveDataFromList(index){
+    setState(() {
+      toDoList.removeAt(index);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +58,24 @@ class _ToDopageState extends State<ToDopage> {
                   children: [
                     Expanded(
                       flex: 7,
-                      child: TextFormField(),
+                      child: TextFormField(
+                        onChanged: (value){
+                          myInputOnChange(value);
+                        },
+                        decoration: appInputDecoretion("List Item"),
+                      ),
                     ),
                     Expanded(
                       flex: 3,
-                      child: ElevatedButton(
-                        child: Text("Add"),
-                        onPressed: (){
-
-                        },
+                      child: Container(
+                        margin: EdgeInsets.only(left: 20),
+                        child: ElevatedButton(
+                          style: appButtonStyle(),
+                          child: Text("Add"),
+                          onPressed: (){
+                            AddItemIntoList();
+                          },
+                        ),
                       ),
                     ),
                   ],
@@ -49,10 +84,34 @@ class _ToDopageState extends State<ToDopage> {
             Expanded(
                 flex: 9,
                 child: ListView.builder(
-                  itemCount: ToDoList.length,
+                  itemCount: toDoList.length,
                     itemBuilder: (context, index){
                       return Card(
-                        child: Text("List Will Show"),
+                        child: sizeBox50(
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 8,
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: Text("${toDoList[index]["item"]}"),
+                                  )
+                              ),
+                              Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: TextButton(
+                                      child: Icon(Icons.delete),
+                                      onPressed: (){
+                                        RemoveDataFromList(index);
+                                      },
+                                    ),
+                                  )
+                              ),
+                            ],
+                          )
+                        )
                       );
                     }
                 )
